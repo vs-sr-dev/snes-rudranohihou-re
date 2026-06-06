@@ -1,0 +1,38 @@
+# ---- Never commit the game or anything derived from its assets ----
+# ROM images (any extension/region)
+*.sfc
+*.smc
+*.fig
+*.swc
+rom/*
+!rom/README.md
+
+# Raw dumps, memory snapshots, VRAM, save states
+*.dmp
+*.bin
+*.srm
+*.sav
+*.state
+vram*.dmp
+
+# Screenshots / captured game graphics (copyrighted pixels)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+
+# Generated artifacts (the .tbl is regenerable from the tool)
+docs/rudra-jap.tbl
+
+# ---- Python ----
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ---- Editor / OS ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
