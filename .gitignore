@@ -15,6 +15,15 @@ rom/*
 *.state
 vram*.dmp
 
+# Extracted audio (copyrighted) — SPC/sequence/sample artifacts
+*.spc
+*.mid
+*.midi
+*.sf2
+*.dls
+*.wav
+*.brr
+
 # Screenshots / captured game graphics (copyrighted pixels)
 *.png
 *.jpg

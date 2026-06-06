@@ -17,8 +17,12 @@ used to crack them.
 | Path | What it is |
 |------|------------|
 | [`devlog/`](devlog/) | The "captain's log": chronological write-ups of the cracking process |
-| [`docs/encoding.md`](docs/encoding.md) | Technical reference of the discovered text format |
+| [`docs/encoding.md`](docs/encoding.md) | Technical reference of the discovered **text** format |
+| [`docs/audio.md`](docs/audio.md) | Technical reference of the **sound engine** (host API, song tables) |
 | [`tools/rudra_text.py`](tools/rudra_text.py) | Original Python tool: encoding table + message extractor |
+| [`tools/spc_wrap.py`](tools/spc_wrap.py) | Wrap a *user-captured* APU RAM image into a playable `.spc` |
+| [`tools/itikiti_seq.py`](tools/itikiti_seq.py) | Decode the AKAO/Itikiti sequence bytecode (opcode table) |
+| [`tools/rudra_ripper.lua`](tools/rudra_ripper.lua) | Mesen2 Lua: spy on the audio API / drive the loader |
 | `rom/` | **Empty.** Where *you* place *your own* legally-owned ROM (git-ignored) |
 
 ## Why this exists
@@ -66,5 +70,9 @@ python tools/rudra_text.py find "おそい"        # locate a kana string, decod
 
 ## Status
 
-🚧 Ongoing, hobby-paced. ~250 of the game's ~730 kanji codes identified so far,
-plus the structural pieces above. Contributions/corrections welcome via issues.
+🚧 Ongoing, hobby-paced. **~271 of the game's ~730 kanji codes** identified so
+far, plus the structural pieces above. The project has also grown a second
+track — the **AKAO-family sound engine** (see [`docs/audio.md`](docs/audio.md)
+and [devlog 002](devlog/002-the-akao-sound-engine-and-spc-ripping.md)):
+the host audio API, the in-ROM song-pointer tables, and an honest account of an
+emulator-automation dead end. Contributions/corrections welcome via issues.

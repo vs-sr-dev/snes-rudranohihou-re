@@ -61,6 +61,13 @@ Codes are roughly ordered by frequency.
 01 24 01 59 01 64 -> 教団員  ("cult member")
 ```
 
+As of this writing ~271 of the ~730 kanji codes are mapped. They cluster by
+domain (story, menus, locations, magic system), which makes screenshot-cribbing
+snowball: one shop/flyer screen often yields a whole vocabulary at once. E.g. a
+single weapon-shop + item-flyer pass pinned the game-system words
+武器 / 防具 / 道具 / 装備 (`器`=`01 BE`, `防`=`01 C1`, `具`=`01 97`,
+`装`=`01 A5`, `備`=`01 A1`) plus everyday kanji like 真っ黒 / 安心 / 治る.
+
 Notes & gotchas:
 - A message is `$00`-terminated, but **`$00` can be the *second* byte of a
   kanji** (e.g. `01 00`). Message-splitting must be kanji-aware.

@@ -144,6 +144,17 @@ KANJI = {
     # --- sessione 3 (SURLENT: menu equip, descrizioni) ---
     (1,0xAE):"両",(1,0x49):"帯",(1,0xB7):"片",(1,0x0D):"霊",(1,0x5B):"用",
     (2,0x5A):"衣",  # 〔0103〕〔010D〕=言霊 (kotodama!) = top compound 210×
+    # --- sessione 6 (animali parlanti + negozio armi + volantino じょうかやく) ---
+    (1,0xB9):"動",  # 動物 (お話ができる動物) - cane parlante
+    (1,0xBE):"器",(1,0xC1):"防",(1,0x97):"具",  # 武器屋 / 防具 (negozio armi); 具 anche 道具
+    (2,0x0F):"真",(2,0xE9):"黒",  # 真っ黒 (volantino: 体が真っ黒で)
+    (3,0x2F):"品",  # 品うす(品薄) = scorte basse
+    (2,0xB5):"治",  # 治る (じょうかやく=浄化薬で治る)
+    (2,0xB9):"安",(1,0x8D):"心",  # ご安心を; 心=018D freq 372
+    (1,0xA5):"装",(1,0xA1):"備",  # 装備 (陰属性の防具を装備しておくと)
+    (2,0x5B):"味",  # 水の味がかわった (tema 汚染↔浄化: acqua tornata buona)
+    (1,0xE9):"引",  # 引き出しの中に… (cassetto)
+    (3,0xA7):"厳",  # tentativo: 道のりは厳しいものになる (unico contesto; vs 難/苦)
 }
 # NB: alcune (lead,idx) collidono fra tabelle diverse del gioco (es. 0133 sia 旅/属):
 # qui il dizionario tiene l'ultima; per il dump distinguiamo via lead reale dei byte.
