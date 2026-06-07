@@ -137,9 +137,16 @@ Beyond kana and kanji, the engine has a small zoo of insertion codes:
 
 ## Where things stand
 
-~250 of ~730 kanji codes identified, plus the kana table, the control/insertion
-codes, the furigana mechanism, the location table, and a partial DTE
-dictionary. The fastest path to the rest is more screenshot-cribbing; the
-"complete" path to the `$17` table is a bank-`$C0` engine trace.
+**~286 of ~730 kanji codes** identified, plus the kana table, the
+control/insertion codes, the furigana mechanism, the location table, and a
+partial DTE dictionary. The fastest path to the rest is more
+screenshot-cribbing; the "complete" path to the `$17` table is a bank-`$C0`
+engine trace.
+
+Recent batches kept proving the method: a town-NPC pass finally finished the
+four compass directions (北 was the long-missing one), and a bar/cocktail line
+*corrected* an earlier reading — `$025B` is 色 (*colour*), not 味 (*taste*). In
+hindsight every one of its ~13 contexts is "the colour of the sky/water/sea
+changed", squarely on the game's pollution theme. Ground truth wins again.
 
 See [`../docs/encoding.md`](../docs/encoding.md) for the structural reference.

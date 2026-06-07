@@ -21,6 +21,7 @@ used to crack them.
 | [`docs/audio.md`](docs/audio.md) | Technical reference of the **sound engine** (host API, song tables) |
 | [`tools/rudra_text.py`](tools/rudra_text.py) | Original Python tool: encoding table + message extractor |
 | [`tools/spc_wrap.py`](tools/spc_wrap.py) | Wrap a *user-captured* APU RAM image into a playable `.spc` |
+| [`tools/rudra_rip_static.py`](tools/rudra_rip_static.py) | Reconstruct any song's APU image **from the ROM tables alone** — emulator-free static rip |
 | [`tools/itikiti_seq.py`](tools/itikiti_seq.py) | Decode the AKAO/Itikiti sequence bytecode (opcode table) |
 | [`tools/rudra_ripper.lua`](tools/rudra_ripper.lua) | Mesen2 Lua: spy on the audio API / drive the loader |
 | `rom/` | **Empty.** Where *you* place *your own* legally-owned ROM (git-ignored) |
@@ -70,9 +71,11 @@ python tools/rudra_text.py find "おそい"        # locate a kana string, decod
 
 ## Status
 
-🚧 Ongoing, hobby-paced. **~271 of the game's ~730 kanji codes** identified so
+🚧 Ongoing, hobby-paced. **~286 of the game's ~730 kanji codes** identified so
 far, plus the structural pieces above. The project has also grown a second
 track — the **AKAO-family sound engine** (see [`docs/audio.md`](docs/audio.md)
 and [devlog 002](devlog/002-the-akao-sound-engine-and-spc-ripping.md)):
-the host audio API, the in-ROM song-pointer tables, and an honest account of an
-emulator-automation dead end. Contributions/corrections welcome via issues.
+the host audio API, the in-ROM song-pointer tables, an honest account of an
+emulator-automation dead end — and the **fully static extractor** that won,
+reconstructing every song's APU image from the ROM tables alone (no emulator),
+ready for VGMTrans. Contributions/corrections welcome via issues.

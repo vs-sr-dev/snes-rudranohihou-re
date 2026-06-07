@@ -152,9 +152,27 @@ KANJI = {
     (2,0xB5):"治",  # 治る (じょうかやく=浄化薬で治る)
     (2,0xB9):"安",(1,0x8D):"心",  # ご安心を; 心=018D freq 372
     (1,0xA5):"装",(1,0xA1):"備",  # 装備 (陰属性の防具を装備しておくと)
-    (2,0x5B):"味",  # 水の味がかわった (tema 汚染↔浄化: acqua tornata buona)
+    (2,0x5B):"色",  # CORR(sess.7): 色 NON 味! 空/水/大地/海の色がかわった (tema 汚染); 青い色/あんな色
     (1,0xE9):"引",  # 引き出しの中に… (cassetto)
     (3,0xA7):"厳",  # tentativo: 道のりは厳しいものになる (unico contesto; vs 難/苦)
+    # --- sess.7: NPC città inquinata (Sion) + bar cocktail ---
+    (2,0x04):"娘",  # イグルスの娘 / 娘にはたくさんの (musume)
+    (1,0xE2):"名",  # その名の通り / 名前(01E2 0135) / 名勝負 (na/mei)
+    (3,0x20):"炎",  # 炎のように赤い / 炎のパンチ / 神聖なる炎のカクテル (honoo)
+    (2,0x4D):"赤",  # 赤いカクテル / 空が赤ちゃけている (aka, cielo arrossato = 汚染)
+    (2,0xEF):"太",  # 太陽(02EF 01EB) 光をはなつ太陽 / 太陽がかがやいてる (ta in taiyou=sole)
+    # --- sess.7b: laboratorio studiosi ラゴウ石/ルドラ (Surlent) ---
+    (2,0x2B):"解",  # 解明(022B 0181)を急がない/解明される + 理解できません (kai)
+    (2,0x7D):"謎",  # ラゴウ石の謎は解明される (nazo, mistero)
+    (2,0xB4):"刻",  # 側面に文字が刻まれては (kizamu, inciso sulla pietra)
+    (2,0x89):"夢",  # 夢のようですよ (yume, sogno)
+    # --- sess.7c: città di カスタギア博士 (Surlent): negozio/servizi ---
+    (1,0x9A):"北",  # 町の北のほうにあるよ — COMPLETA le direzioni 東01D1 南017C 西01E7 北019A
+    (1,0xEF):"店",  # お店 / 店でも / 店主 / 店の入り口 (mise, negozio)
+    (2,0x0B):"読",  # 読む / 読まない / 読んでみようか (yomu)
+    (1,0x95):"口",  # 出入口 / 店の入り口 (kuchi/guchi, apertura)
+    (2,0x93):"売",  # いくつかは店でも売っとるよ (uru, vendere)
+    (2,0x35):"買",  # モノを買うなら (kau, comprare)
 }
 # NB: alcune (lead,idx) collidono fra tabelle diverse del gioco (es. 0133 sia 旅/属):
 # qui il dizionario tiene l'ultima; per il dump distinguiamo via lead reale dei byte.

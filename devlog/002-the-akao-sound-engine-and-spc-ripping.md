@@ -1,8 +1,9 @@
-# 002 — The AKAO sound engine, and an honest SPC-ripping dead end
+# 002 — The AKAO sound engine: an honest dead end, then a static win
 
 *How Rudra's audio API was reverse-engineered from the 65816 side — the song
-pointer tables, a verbatim ROM→ARAM copy — and why "just automate the rip in the
-emulator" turned into the most instructive failure of the session.*
+pointer tables, a verbatim ROM→ARAM copy — why "just automate the rip in the
+emulator" turned into the most instructive failure of the session, and how a
+fully static extractor then reconstructed the whole soundtrack from ROM alone.*
 
 This is a methodology log. It documents how the **engine** works and how each
 piece was found and verified; it reproduces **no music**. See
@@ -96,10 +97,55 @@ far) to reset the SPC between injections without breaking it. We stopped.
 ## What actually works
 
 - **Capture-during-play** + `spc_wrap.py`: 100% reliable, one song per dump.
-- **A fully static extractor** that reverses the multi-block uploader `$EB022A`
-  and reconstructs each song from the ROM tables — more work, but deterministic
-  and emulator-free. (Foundations are in place: tables found, copy proven, loader
-  mapped.)
+- **A fully static extractor** that reconstructs each song from the ROM tables —
+  more work, but deterministic and emulator-free. This is the one that won; the
+  story is below.
+
+## Step 5 — The static extractor, end to end
+
+A reader's nudge ("can't you just read it from the ROM?") had already produced
+the pointer tables. Picking that thread back up turned the "foundations" into a
+working ripper. The chain, each link checked byte-for-byte against real captures:
+
+1. **Diff three captures.** The engine (`$0200–$1B00`) is *shared* (5–40 bytes of
+   runtime drift); only the samples (`~$2600–$9000`) and the sequence
+   (`~$C400–$F000`) change per song — and both are **verbatim in ROM**. So a song
+   = shared engine + a handful of verbatim block copies.
+
+2. **The header is `[size][payload]`,** and the relocation key is almost silly:
+   the `size` word equals the payload length, and **every song ends at `$CD00`**,
+   so `dest = $CD00 − size`. (The `$C9xx` addresses VGMTrans names in a *live*
+   capture are running play-cursors in zero-page, not the real track starts —
+   that mismatch cost an hour of confusion until the loader code explained it.)
+
+3. **The instrument list hides in plain sight** — the 16 bytes *before* the
+   header (`$EB0981` does `$E7 = header − $0F`). Each id indexes a **global sample
+   pool**: four parallel tables (source `$EB296C`, loop `$EB2A33`, tuning
+   `$EB2AB7` *big-endian*, ADSR `$EB2B3B`), all found by brute-forcing the base
+   that makes a known song's ids line up (10/10 each time). BRR data packs into
+   ARAM from `$25E6`, dir indices from 32 up. Full reconstruction of a song's
+   samples + directory + ADSR: **0 mismatch over 33 KB.**
+
+4. **Cross-template proof.** Rebuilding *Surlent* on the *Sion* template produced
+   a byte-identical match to the real Surlent capture. It opened in VGMTrans, the
+   right song, the right instruments — but **flat, uneven pitch.** The smell-test
+   from §7.3 of the reference: a forgotten table. The tuning table (`$1D40` in
+   ARAM, `$EB2AB7` in ROM, *big-endian*) was the missing one; with it, the
+   reconstruction was indistinguishable from the original.
+
+5. **The one byte that makes VGMTrans open the file.** Its scanner reads the song
+   pointer from `$ED80` (`= dest + 2 + N*2`). Reconstruct elsewhere without
+   updating it and the file is silently rejected. Reading the scanner source
+   beat guessing.
+
+`batch` then walks the type-0 table and writes one `.spc` per song. The last bug
+was the best kind: a user noticed *exactly two* songs missing — the Surlent and
+Riza **boss themes**, but not Sion's. Not a coincidence, not "dynamic music": the
+boss themes are simply the **longest** songs, so their `dest = $CD00 − size` dips
+below `$C000`, and a bogus `dest ≥ $C000` sanity filter had dropped precisely
+those. Sion's boss is shorter, so it slipped through. Removing the filter (the
+real constraint is only "samples must not overrun the sequence") brought the
+count to 95 — the whole soundtrack, boss themes included, straight from ROM.
 
 ## Lessons
 
@@ -113,3 +159,14 @@ far) to reset the SPC between injections without breaking it. We stopped.
   *game* at all but about undocumented emulator-scripting semantics
   (partial-`setState` zeroing, savestate callback context). When an automation
   fights you at every turn, suspect the harness, not just the target.
+- **Read the consumer's source, don't guess its contract.** Two "why won't it
+  open / why is the pitch wrong" bugs vanished the moment we read VGMTrans's own
+  `ItikitiSnesScanner`/`ItikitiSnesInstr`: the `$ED80` header pointer and the
+  big-endian tuning table were spelled out there, not worth brute-forcing blind.
+- **Validate byte-for-byte, against a different template.** "0 mismatch" on a
+  *cross*-template rebuild (Surlent on Sion) is a far stronger proof than
+  rebuilding a song onto its own capture — it isolates what's truly per-song.
+- **A user's "that's oddly specific" is a bug report.** "All the songs are here
+  except *those two boss themes*" wasn't a quirk of dynamic music; it was a
+  length-dependent off-by-filter. Anomalies that are *too* clean point at your
+  code, not the game's.
